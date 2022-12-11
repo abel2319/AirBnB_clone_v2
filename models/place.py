@@ -2,6 +2,7 @@
 """ Place Module for HBNB project """
 from os import environ
 from models import storage
+
 from models.base_model import BaseModel, Base
 from models.amenity import Amenity
 from models.review import Review
@@ -14,6 +15,7 @@ place_amenity = Table('place_amemity', Base.metadata,
     Column('amenity_id', String(60), primary_key=True, nullable=False,
            ForeignKey('amenities.id'))
 )
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -40,6 +42,7 @@ class Place(BaseModel, Base):
         def reviews(self):
             """getter attribute reviews that returns the list of
             Review instances with place_id equals to the current Place.id
+
             """
             tmp = storage.all(Review)
             list_review = [review for review in tmp.values() \
