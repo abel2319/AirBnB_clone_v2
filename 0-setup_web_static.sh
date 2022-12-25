@@ -3,14 +3,20 @@
 
 #installation of nginx
 sudo apt update
-sudo apt install nginx
+sudo apt -y install nginx
 ufw allow 'Nginx HTTP'
 
 #creation of folders
-mkdir -p /data/web_static/shared/ /data/web_static/releases/test
+mkdir -p /data/web_static/shared /data/web_static/releases/test/
 
 #create file
-echo 'Welcome to deployment' > /data/web_static/releases/test/index.html
+echo -e '<html>
+  <head>
+  </head>
+  <body>
+    Holberton School
+  </body>
+</html>' > /data/web_static/releases/test/index.html
 
 #symbolic link
 ln -sf /data/web_static/current /data/web_static/releases/test
@@ -19,5 +25,14 @@ ln -sf /data/web_static/current /data/web_static/releases/test
 sudo chown -R ubuntu:ubuntu /data/
 
 #update nginx configuration
-sudo sed -i '38i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
+printf %s "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	location hbnb_static/ {
+		alias /data/web_static/current/;
+	}
+}" > /etc/nginx/sites-available/default
 service nginx restart
