@@ -2,8 +2,8 @@
 #Bash script that sets up your web servers for the deployment of web_static
 
 #installation of nginx
-sudo apt update
-sudo apt -y install nginx
+apt update
+apt -y install nginx
 ufw allow 'Nginx HTTP'
 
 #creation of folders
@@ -22,7 +22,7 @@ echo -e '<html>
 ln -sf /data/web_static/current /data/web_static/releases/test
 
 #ownership
-sudo chown -R ubuntu:ubuntu /data/
+chown -R ubuntu:ubuntu /data/
 
 #update nginx configuration
 printf %s "server {
