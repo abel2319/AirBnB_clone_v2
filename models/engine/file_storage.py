@@ -68,3 +68,8 @@ class FileStorage:
                 if self.all()[key] == obj:
                     del self.all()[key]
                     break
+
+    def close(self):
+        """
+        """
+        self.reload();
